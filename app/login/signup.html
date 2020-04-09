@@ -1,0 +1,64 @@
+
+    <form>
+      <h2 style="font-weight: 600;">Create a New Account</h2>
+      <p>It's quick and easy.</p>
+      <div class="form-group form-row">
+        <div class="col">
+          <input ng-model="firstName" type="text" class="form-control" placeholder="First Name">
+        </div>
+        <div class="col">
+          <input ng-model="lastName" type="text" class="form-control" placeholder="Last Name">
+        </div>
+      </div>
+      <div class="form-group">
+        <input ng-model="emailRs" type="email" class="form-control" placeholder="Email">
+      </div>
+      <div class="form-group">
+        <input ng-model="passwordRs" type="password" class="form-control" placeholder="Password">
+      </div>
+      <div class="form-group">
+        <label>Birthday</label>
+        <div class="form-group">
+          <select class="col-form-control form-control-sm">
+            <option>Jan</option>
+            <option>Feb</option>
+            <option>Mar</option>
+            <option>Apr</option>
+            <option>May</option>
+            <option>Jun</option>
+            <option>Jul</option>
+            <option>Aug</option>
+            <option>Sep</option>
+            <option>Oct</option>
+            <option>Nov</option>
+            <option>Jan</option>
+          </select>
+          <select class="col-form-control form-control-sm">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+          </select>
+          <select class="col-form-control form-control-sm">
+            <option>2000</option>
+            <option>2001</option>
+            <option>2002</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Gender</label>
+        <div class="form-group">
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input">
+            <label class="custom-control-label">Female</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input">
+            <label class="custom-control-label">Male</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6" style="padding-right:0px !important;padding-left:0px !important;">
+        <button class="btn btn-success btn-block" type="submit" style="border-color: black;">Sign Up</button>
+      </div>
+    </form>

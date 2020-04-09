@@ -1,11 +1,62 @@
-<div>
-    <h1>Login Page</h1>
-    
-    <form ng-submit="submit()" >
-        <p>Email: <input ng-model="email" type="email"></p>
-        <p>Password:  <input ng-model="password" type="password"></p>
-        <button>Log in</button>
+<style>
+  .color1
+  {
+    background-color: #3b5998;
+  }
+  #loginBtn
+  {
+    position:absolute;
+    bottom:0rem;
+    border-color: black;
+  }
+  #topDiv > div
+  {
+    padding-left: 7rem;
+    padding-right: 7rem;
+  }
+  #fbWord
+  {
+    color: white;
+    font-weight: 700;
+    padding-top: 1.5rem;
+  }
+  #topDiv label
+  {
+    color: whitesmoke;
+  }
+  #topDiv input
+  {
+    height: 2rem !important;
+  }
+</style>
+<div id="topDiv" class="row color1">
+  <div class="col-md-6">
+    <h1 id="fbWord">facebrutes</h1>
+  </div>
+  <div class="col-md-6">
+    <form ng-submit="submit()">
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label>Email</label>
+          <input ng-model="email" type="email" class="form-control" style="height:1.5rem !important;">
+        </div>
+        <div class="form-group col-md-4">
+          <label>Password</label>
+          <input ng-model="password" type="password" class="form-control" style="height:1.5rem !important;">
+        </div>
+        <div class="form-group col-md-4">
+          <button id="loginBtn" type="submit" class="btn color1" style="color:whitesmoke;">Log in</button>
+        </div>
+      </div>
     </form>
-    
-    
+  </div>
 </div>
+
+<div class="d-flex flex-row-reverse" style="background-color:#e9ebee; padding:5rem;">
+  <div class="col-5">
+    <div ng-include="'app/login/signup.html'" ></div>
+  </div>
+  
+</div>
+
+
