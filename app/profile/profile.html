@@ -1,6 +1,7 @@
 <div>
-    <h1>Profile of {{client}}</h1>
-    <a href="/">Go to main page</a>
-    <button ng-click="client.logout()" >Logout</button>
+  <h1>Profile of {{client.fullName}}</h1>
+  <pre>{{client | json}}</pre>
+  <a href="/">Go to main page</a>
+  <button ng-click="client.logout()" >Logout</button>
 </div>
 

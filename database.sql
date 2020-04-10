@@ -7,7 +7,7 @@ CREATE TABLE persons
     firstName 	VARCHAR(30) NOT NULL,
     lastName 	VARCHAR(30) NOT NULL,
 	fullName 	VARCHAR(60) AS (CONCAT(firstName, " ", lastName)),
-    email 		VARCHAR(100) NOT NULL,
+    email 		VARCHAR(100) UNIQUE NOT NULL,
     password 	VARCHAR(50) NOT NULL,
     birthday	DATE NOT NULL,
     gender 		CHAR(1),

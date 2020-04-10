@@ -1,4 +1,6 @@
 <?php
+// Returns the sessioned client
+
 session_start();
 
 require_once 'Client.php';
