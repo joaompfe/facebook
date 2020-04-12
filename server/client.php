@@ -3,8 +3,6 @@
 
 session_start();
 
-require_once 'Client.php';
-
 if (!isset($_SESSION["client"])) {
     echo "{}";
 }
