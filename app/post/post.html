@@ -1,0 +1,25 @@
+<style>
+  #post
+  {
+    background-color: white;
+  }
+  #content
+  {
+    font-size: x-large;
+  }
+</style>
+<div id="post">
+  <div id="header">
+    <p>Author: {{vm.post.author}}</p>
+    <p>Date: {{vm.post.creationTime}}</p>
+  </div>
+  <div id="content">
+    <p>{{vm.post.text}}</p>
+  </div>
+  <div id="action">
+    <p>Likes: {{vm.post.likes}}</p>
+  </div>
+  <div id="comment">
+
+  </div>
+</div>

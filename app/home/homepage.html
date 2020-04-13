@@ -1,6 +1,35 @@
-<div>
+<style>
+  #facebook
+  {
+    padding-left: 6rem;
+    padding-right: 6rem;
+    background-color:#e9ebee;
+  }
+  post-comp
+  {
+    margin-top: 2rem;
+  }
+  .container
+  {
+    border: 1px solid black;
+  }
+</style>
+<div id="facebook">
   <h1>Main Page of {{client.fullName}}</h1>
-  <pre>{{client | json}}</pre>
   <a href="/profile">Go to profile</a>
   <button ng-click="client.logout()" >Logout</button>
+  <div class="container">
+    <div class="row">
+      <div class="col-2">
+        <p>{{client.fullName}}</p>
+      </div>
+      <div class="col-7">
+        <post-comp ng-if="postsLoaded" ng-repeat="post in posts" post="post"></post-comp>
+      </div>
+      <div class="col-3">
+        <p>Language Bla Bla</p>
+      </div>
+    </div>
+    
+  </div>
 </div>
