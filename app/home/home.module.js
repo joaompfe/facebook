@@ -12,8 +12,6 @@ angular.module('fb.home', ['fb.post'])
         function init() {
             posts.getNewPosts(20, 0)
             .then(function(posts) {
-                console.log(posts);
-
                 posts.push(...$scope.posts);
                 $scope.posts = posts;
 

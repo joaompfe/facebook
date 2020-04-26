@@ -1,0 +1,48 @@
+<div class="comment">
+  <a href="#">
+    <img src="content/default_profile_photos/m_profile_photo_50.jpg" alt="">
+  </a>
+  <div>
+    <div class="comment-text">
+      <a class="comment-author-name" href="#">{{vm.comment.author.fullName}}</a>
+      {{vm.comment.text}}
+    </div>
+    <div class="comment-actions">
+      <a href="#">Like</a>
+      <a ng-click="vm.focusReplyInput()" href="#">Reply</a>
+      17m
+    </div>
+  
+    <!-- Sub comments -->
+    <div class="subcomments">
+      <div ng-repeat="reply in vm.comment.replies" class="comment">
+        <a href="#">
+          <img src="content/default_profile_photos/m_profile_photo_50.jpg" alt="">
+        </a>
+        <div>
+          <div class="comment-text">
+            <a class="comment-author-name" href="#">{{reply.author.fullName}}</a>
+            {{reply.text}}
+          </div>
+          <div class="comment-actions">
+            <a href="#">Like</a>
+            <a ng-click="vm.focusReplyInput()" href="#">Reply</a>
+            15m
+          </div>
+        </div>
+      </div>
+      <div ng-if="(vm.comment.amountOfRepliesInDatabase - vm.comment.replies.length) != 0">
+        <div class="comment-actions">
+          <a ng-click="vm.showMoreReplies()" href="#">View {{vm.comment.amountOfRepliesInDatabase - vm.comment.replies.length}} more replies</a>
+        </div>
+      </div>
+      <form ng-show="vm.wasReplyClicked" ng-submit="vm.writeReply()" class="write-reply">
+        <a href="#">
+          <img src="content/default_profile_photos/m_profile_photo_50.jpg" alt="">
+        </a>
+        <input ng-model="vm.replyContent" fb-element="vm.replyInput" type="text" placeholder="Write a reply...">
+      </form>
+    </div>
+  </div>
+</div>
+  

@@ -1,102 +1,90 @@
 'use strict';
 
 angular.module('fb.post')
-    .factory('posts', ['$http', '$q', function($http, $q) {
-        var posts = {
-            getNewPosts: getNewPosts
-        };
-
-        return posts;
-
-        function getNewPosts(quantity, sincePostId) {
-            return $q(function(resolve, reject) {
-                $http({
-                    url: 'server/posts.php', 
-                    method: 'GET',
-                    params: {
-                        quantity: quantity,
-                        type: 'new',
-                        postId: sincePostId
-                    }
-                })
-                .then(function(response) {
-                    if (!angular.equals(response.data, {})) {
-                        resolve(response.data);
-                    }
-                    else {
-                        reject({reason: "Server returned no post", httpResponse: response});
-                    }
-                }, function(response) {
-                    console.log(response);
-                    reject({reason: "HTTP failed", httpResponse: response});
-                });
-            });
-        }
-    }])
-    .factory('post', ['$http', '$q', function($http, $q) {
+    .factory('post', ['utils', function(utils) {
         var post = {
-            getComments: getComments
+            getComments: getComments,
+            writeComment: writeComment,
+            getLikes: getLikes,
+            like: like,
+            dislike: dislike
         };
+
+        const baseUrl = 'server/post/';
 
         return post;
-
+        
         function getComments(postId, quantity, sinceCommentId) {
-            return $q(function(resolve, reject) {
-                $http({
-                    url: 'server/postcomments.php', 
+            return utils.httpPromisse(
+                {
+                    url: baseUrl + 'readComments.php', 
                     method: 'GET',
                     params: {
                         postId: postId,
                         quantity: quantity,
                         commentId: sinceCommentId
                     }
-                })
-                .then(function(response) {
-                    if (!angular.equals(response.data, {})) {
-                        resolve(response.data);
-                    }
-                    else {
-                        reject({reason: "Server returned no comment", httpResponse: response});
-                    }
-                }, function(response) {
-                    console.log(response);
-                    reject({reason: "HTTP failed", httpResponse: response});
-                });
-            });
+                },
+                "comments",
+                "Server returned no comment"
+            );
         }
-    }])
-    .factory('comment', ['$http', '$q', function($http, $q) {
-        var comment = {
-            getComments: getComments
-        };
 
-        return comment;
+        function writeComment(postId, content) {
+            return utils.httpPromisse(
+                {
+                    url: baseUrl + 'writeComment.php', 
+                    method: 'POST',
+                    data: {
+                        postId: postId,
+                        content: content
+                    }
+                },
+                "comment",
+                "Write comment failed in server"
+            );
+        }
 
-        function getComments(commentId, quantity, sinceSubCommentId) {
-            console.log(sinceSubCommentId);
-            return $q(function(resolve, reject) {
-                $http({
-                    url: 'server/commentcomments.php', 
+        function getLikes(postId, quantity) {
+            return utils.httpPromisse(
+                {
+                    url: baseUrl + 'readLikes.php', 
                     method: 'GET',
                     params: {
-                        commentId: commentId,
-                        quantity: quantity,
-                        commentCommentId: sinceSubCommentId
+                        postId: postId,
+                        quantity: quantity
                     }
-                })
-                .then(function(response) {
-                    console.log("getCComments service");
-                    console.log(response);
-                    if (!angular.equals(response.data, {})) {
-                        resolve(response.data);
+                },
+                "likes",
+                "Read like action failed in server"
+            );
+        }
+
+        function like(postId) {
+            return utils.httpPromisse(
+                {
+                    url: baseUrl + 'like.php', 
+                    method: 'GET',
+                    params: {
+                        postId: postId
                     }
-                    else {
-                        reject({reason: "Server returned no sub comment", httpResponse: response});
+                },
+                "like",
+                "Like action failed in server"
+            );
+        }
+
+        function dislike(postId) {
+            return utils.httpPromisse(
+                {
+                    url: baseUrl + 'dislike.php', 
+                    method: 'GET',
+                    params: {
+                        postId: postId
                     }
-                }, function(response) {
-                    console.log(response);
-                    reject({reason: "HTTP failed", httpResponse: response});
-                });
-            });
+                },
+                null,
+                "Dislike action failed in server"
+            );
         }
     }]);

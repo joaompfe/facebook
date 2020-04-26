@@ -45,6 +45,25 @@
     padding-left: 0.7rem;
     padding-right: 0.7rem;
   }
+  #likes
+  {
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+    padding-bottom: 0.7rem;
+  }
+  #likes > a
+  {
+    color: rgb(96, 103, 112);
+    font-size: 13px;
+    display: inline-block;
+    height: auto;
+  }
+  #likes > a > img
+  {
+    vertical-align: top;
+    height: 18px;
+    width: 18px;
+  }
   #action > .row > .col-4
   {
     width: 100%;
@@ -79,7 +98,11 @@
     padding: 0.3rem 0.7rem;
     border-top: 1px solid #dadde1;
   }
-  .comment > a > img
+  .comments > comment-comp > .comment
+  {
+    margin-bottom: 8px;
+  }
+  .comment > a > img, .write-comment > a > img, .write-reply > a > img
   {
     border-radius: 50%;
     height: 32px;
@@ -94,10 +117,11 @@
   {
     color: #385898;
   }
-  .subcomments > .comment > a > img
+  .subcomments > .comment > a > img, .write-reply > a > img 
   {
     height: 20px;
     width: 20px;
+    margin-top: 8px;
   }
   .comment-actions
   {
@@ -118,7 +142,15 @@
     border-radius: 18px;
     width: max-content;
   }
-  
+  .write-comment input, .write-reply input
+  {
+    border-radius: 18px;
+    border: 1px solid #ccd0d5;
+    background-color: #f2f3f5;
+    font-size: 13px;
+    line-height: 16px;
+    padding: 8px 10px;
+  }
 </style>
 <div id="post">
   <div id="header">
@@ -134,19 +166,23 @@
   <div id="content">
     <p>{{vm.post.text}}</p>
   </div>
-  <div id="likes" ng-if="vm.post.likes > -1">
-    <p>Likes: {{vm.post.likes}}</p>
+  <div id="likes" ng-if="vm.post.likes.length > 0">
+    <a href="#" role="button">
+      <img src="content/icons/like.png" alt="">
+    </a>
+    <a href="#">{{vm.post.likes.length}}</a>
   </div>
   <div id="action">
     <div class="row">
       <div class="col-4">
-        <a href="#" role="button">
-          <img src="content/icons/like_unclicked.png" alt="">
+        <a ng-click="vm.toggleLike()" href="#" role="button">
+          <img ng-show="!vm.clientLike" src="content/icons/like_unclicked.png" alt="">
+          <img ng-show="vm.clientLike" src="content/icons/like_clicked.png" alt="">
           Like
         </a>
       </div>
       <div class="col-4">
-        <a href="#" role="button">
+        <a ng-click="vm.focusCommentInput()" href="#" role="button">
           <img src="content/icons/comment.png" alt="">
           Comment
         </a>
@@ -161,51 +197,17 @@
     
   </div>
   <div class="comments">
-    <div ng-controller="CommentCtrl" ng-repeat="comment in vm.post.comments" class="comment">
-      <a href="#">
-        <img src="content/default_profile_photos/m_profile_photo_50.jpg" alt="">
-      </a>
-      <div>
-        <div class="comment-text">
-          <a class="comment-author-name" href="#">{{comment.author.fullName}}</a>
-          {{comment.text}}
-        </div>
-        <div class="comment-actions">
-          <a href="#">Like</a>
-          <a href="#">Reply</a>
-          17m
-        </div>
-
-        <!-- Sub comments -->
-        <div class="subcomments">
-          <div ng-repeat="comment in comment.comments" class="comment">
-            <a href="#">
-              <img src="content/default_profile_photos/m_profile_photo_50.jpg" alt="">
-            </a>
-            <div>
-              <div class="comment-text">
-                <a class="comment-author-name" href="#">{{comment.author.fullName}}</a>
-                {{comment.text}}
-              </div>
-              <div class="comment-actions">
-                <a href="#">Like</a>
-                <a href="#">Reply</a>
-                15m
-              </div>
-            </div>
-          </div>
-          <div ng-if="(comment.amountOfCommentsInDatabase - comment.comments.length) != 0">
-            <div class="comment-actions">
-              <a ng-click="showMoreComments()" href="#">View {{comment.amountOfCommentsInDatabase - comment.comments.length}} more replies</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <comment-comp ng-repeat="comment in vm.post.comments" comment="comment"></comment-comp>
     <div ng-if="(vm.post.amountOfCommentsInDatabase - vm.post.comments.length) != 0">
       <div class="comment-actions">
         <a ng-click="vm.showMoreComments()" href="#">View {{vm.post.amountOfCommentsInDatabase - vm.post.comments.length}} more comments</a>
       </div>
     </div>
+    <form ng-if="true" ng-submit="vm.writeComment()" class="write-comment">
+      <a href="#">
+        <img src="content/default_profile_photos/m_profile_photo_50.jpg" alt="">
+      </a>
+      <input ng-model="vm.commentContent" fb-element="vm.commentInput" type="text" placeholder="Write a comment...">
+    </form>
   </div>
 </div>

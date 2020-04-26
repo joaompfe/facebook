@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('fb.post', []);
+angular.module('fb.post', ['fb.utils']);

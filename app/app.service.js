@@ -3,12 +3,14 @@ angular.module('fb')
     // return user client asking server for session client. If no session client
     // is available in server, {} is returned.
     .factory('client', ['$http', '$q', '$location', function($http, $q, $location) {
-        var client = {};
-        
-        client.isLogged = false;
-        client.getClient = getClient;
-        client.logout = logout;
-        client.login = login;
+        var client = {
+            isLogged: false,
+            getClient: getClient,
+            logout: logout,
+            login: login
+        };
+
+        return client;
         
         function getClient() {
             // Request server for sessioned client.
@@ -16,10 +18,8 @@ angular.module('fb')
                 $http.get('server/client.php')
                 .then(function(response) {
                     if (!angular.equals(response.data, {})) {
-                        console.log(response.data);
                         for (var k in response.data) 
                             client[k]=response.data[k];
-                        console.log(client);
                         client.isLogged = true;
                         resolve(response.data);
                     }
@@ -43,20 +43,17 @@ angular.module('fb')
             })
             .then(function(response) {
                 if (response.data.loggedSucessfully) {
-                    console.log(response.data);
                     for (var k in response.data.client) 
                         client[k]=response.data.client[k];
-                    console.log(client);
                     client.isLogged = true;
                     $location.url('/');
                 }
                 else {
-                    console.log(response.data);
-                    console.log("Invalid email or password");
+                    console.log("Invalid email or password", response.data);
                 }
             }, 
             function(response) { 
-                console.log(response.statusText);
+                console.log("HTTP failed", response.statusText);
             });
         }
         
@@ -69,11 +66,8 @@ angular.module('fb')
             client.isLogged = false;
             $location.url('/login');
         }
-        
-        return client;
     }])
     .factory('signUp', ['$http', '$q', function($http, $q) {
-        // Register a new person. Returns a promisse.
         return function(firstName, lastName, email, password, birthday, gender) {
             return $q(function(resolve, reject) {
                 $http({
@@ -93,8 +87,7 @@ angular.module('fb')
                         resolve(response);
                     }
                     else {
-                        console.log("SignUp failed");
-                        console.log(response.data);
+                        console.log("SignUp failed", response.data);
                         reject({reason: "SignUp failed", httpResponse: response});
                     }
                 }, 
