@@ -2,18 +2,30 @@
     'use strict';
 
     angular.module('fb.utils')
-        .directive('fbFocusIf', focusIf);
+        .directive('fbElement', fbElement);
 
-    function focusIf() {
+    function fbFocusIf() {
         return {
             scope: { trigger: '=fbFocusIf' },
             link: function(scope, element) {
-                console.log("directiva");
                 scope.$watch('trigger', function(value) {
                     if (value) {
                         element[0].focus();
+                        scope.trigger = false;
                     }
                 })
+            }
+        };
+    }
+
+    function fbElement() {
+        return {
+            scope: { elementHandler: '=fbElement' },
+            link: function(scope, element) {
+                scope.elementHandler = element[0];
+                scope.$evalAsync(function() {
+                    element[0].focus();
+                });
             }
         };
     }
