@@ -7,7 +7,7 @@ angular.module('fb', ['fb.home', 'fb.login', 'fb.profile', 'ngRoute'])
                 templateUrl: 'app/home/homepage.html',
                 controller: 'HomeCtrl'
             })
-            .when('/profile', {
+            .when('/profile/:id',{
                templateUrl: 'app/profile/profile.html',
                controller: 'ProfileCtrl'
             })
@@ -25,7 +25,6 @@ angular.module('fb', ['fb.home', 'fb.login', 'fb.profile', 'ngRoute'])
         // to home page.
         client.getClient()
             .then(function(client) {
-                $location.url('/');
             }, function(error) {
                 $location.url('/login');
             });

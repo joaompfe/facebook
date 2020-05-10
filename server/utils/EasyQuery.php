@@ -140,8 +140,8 @@ class EasyQuery {
         
         $result = $this->mysqli->query($stmt);
 
-        if ($this->mysqli->connect_errno) {
-            error_log("Failed to connect to MySQL: (" . $this->mysqli->connect_errno . ") " . $this->mysqli->connect_error);
+        if (!$result) {
+            error_log("Failed to connect to MySQL: (" . $stmt . ") " . $this->mysqli->error);
         }
 
         $fields = $result->fetch_fields();
