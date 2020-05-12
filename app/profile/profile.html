@@ -1,7 +1,123 @@
-<div>
-  <h1>Profile of {{client.fullName}}</h1>
-  <pre>{{client | json}}</pre>
-  <a href="/">Go to main page</a>
-  <button ng-click="client.logout()" >Logout</button>
-</div>
+<style>
+	h1 {
+		padding-left: 50px;
+		padding-top: 50px;
+		color: #ffffff;
+	}
+	ul {
+		list-style-type: none;
+	}
+	body {
+		background-color: #e6e6e6;
+	}
+	.PersonalPresentation {
+		padding-top: 15px;
+		border-style: solid;
+		border-color: #b3b3b3;
+		margin-left: 20px;
+		background-color: #ffffff;
+	}
+	#ProfileFeed {
+		padding-left: 10%;
+	}
+	#headerProfile {
+		padding-bottom: 100px;
+	}
+	#headerImg {
+		background-image: url("exheader.jpg");
+		height: 300px;
+		display: block;
+		background-position-x: center;
+	}
+	#ProfileName {
+		padding-top: 220px;
+		padding-left: 300px;
+	}
+	#ProfileImg {
+		display: block;
+		height: 150px;
+		width: 150px;
+		top: -100px;
+		left: 80px;
+		position: relative;
+		border-radius: 100%;
+		border: solid;
+		border-width: 5px;
+		border-color: #ffffff;
+	}
+	#ProfileImg > a >img {
+		object-fit: cover;
+		display: block;
+		width:100%; 
+		height:100%;
+		border-radius: 100%;
+	}
+	#changeProfilePic  {
+		position: relative;
+		top: -140px;
+		left: 80px;
+	}
+	#changeProfilePic > button  {
+		background: transparent;
+    	border: none;
+	}
+	
+</style>
 
+<div>
+	<div id="ProfileFeed" class="col-lg-10">
+		<div id="headerProfile">
+			<div id="headerImg">
+				<h1 id="ProfileName">{{profile.fullName}}</h1>
+			</div>
+			<div id="ProfileImg" >
+				<a href="" id="profilePicThumb" >
+					<img id="ProfileImgpng" ng-src="../upload/{{profilePic.filename}}" alt="" /> 
+				</a> 
+			</div>
+			<span id="changeProfilePic" ng-if="checkUser()">
+				
+				<button data-toggle="modal" data-target="#changeProfilePicModal">
+					<img id="changeProfilePicPng" src="../content/icons/photoIcon.png" alt="" />
+				</button>
+			</span>
+			
+		</div>
+
+		<div class="modal fade" id="changeProfilePicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="changeProfilePicTitle">Change Profile Picture</h5>
+				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				</div>
+				<div class="modal-body">
+					<div>
+						<input type="file" upload-photo="files" />
+					</div>
+					<button ng-click="changeProfilePhoto()" type="button" class="btn btn-primary">Load photo...</button>
+					<div>
+						
+					</div>
+				</div>
+				<div class="modal-footer">
+				  
+				  <button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+		<div class="col-lg-3 PersonalPresentation">
+			<ul>
+				<li id="BirthDate">Nascido em {{profile.birthday}}</li>
+				<li id="Gender">{{profile.gender}}</li>
+			</ul>
+		</div>
+
+		<a href="/">Go to main page</a>
+		<button ng-click="client.logout()">Logout</button>
+	</div>
+</div>

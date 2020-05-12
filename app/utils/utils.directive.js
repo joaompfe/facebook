@@ -2,7 +2,8 @@
     'use strict';
 
     angular.module('fb.utils')
-        .directive('fbElement', fbElement);
+        .directive('fbElement', fbElement)
+        .directive('uploadPhoto', uploadPhoto)
 
     function fbFocusIf() {
         return {
@@ -26,6 +27,19 @@
                 scope.$evalAsync(function() {
                     element[0].focus();
                 });
+            }
+        };
+    }
+
+    function uploadPhoto($parse) {
+        return {
+            link: function(scope, element, attrs){
+                element.bind("change", function(event){
+                    var files = event.target.files;
+                    //console.log(files[0].name)
+                    $parse(attrs.uploadPhoto).assign(scope, element[0].files);
+                    scope.$apply();
+                })
             }
         };
     }
