@@ -11,16 +11,18 @@
     padding-left: 0.7rem;
     padding-right: 0.7rem;
   }
-  #header > div > img
+  #header > a > img
   {
     border-radius: 50%;
+    height: 50px;
+    width: 50px;
   }
   #header > div
   {
     display: inline-block;
     vertical-align: bottom;
   }
-  #header > div > h5
+  #header > div > a > h5
   {
     font-size: 14px;
     color: #385898;
@@ -151,15 +153,26 @@
     line-height: 16px;
     padding: 8px 10px;
   }
+  .clicable-img
+  {
+    text-decoration: none !important;
+    border:0px !important;
+    outline:none;
+    border-width: 0px;
+    outline-width:0px;
+    border-bottom: none;
+  }
 </style>
 <div id="post">
   <div id="header">
-    <div>
-      <img src="content/default_profile_photos/m_profile_photo_50.jpg" alt="">
-    </div>
+    <a class="clicable-img" href="/profile/{{vm.post.author.id}}">
+      <img ng-src="server/profile/getProfilePic.php?id={{vm.post.author.id}}&gender={{vm.post.author.gender}}&size='S'" alt="">
+    </a>
     
     <div>
-      <h5>{{vm.post.author.fullName}}</h5>
+      <a href="/profile/{{vm.post.author.id}}">
+        <h5>{{vm.post.author.fullName}}</h5>
+      </a>
       <h6>{{vm.post.creationTime}}</h6>
     </div>
   </div>
@@ -204,8 +217,8 @@
       </div>
     </div>
     <form ng-if="true" ng-submit="vm.writeComment()" class="write-comment">
-      <a href="#">
-        <img src="content/default_profile_photos/m_profile_photo_50.jpg" alt="">
+      <a class="clicable-img" href="/profile/{{$root.client.id}}">
+        <img ng-src="server/profile/getProfilePic.php?id={{$root.client.id}}&gender={{$root.client.gender}}&size='XS'" alt="">
       </a>
       <input ng-model="vm.commentContent" fb-element="vm.commentInput" type="text" placeholder="Write a comment...">
     </form>

@@ -6,7 +6,7 @@ if (isset($_GET["postId"]) && isset($_SESSION["client"])) {
     $personId = $_SESSION["client"]["id"];
 }
 else {
-    $response["success"] = FALSE;
+    $response["success"] = false;
     echo json_encode($response);
     return;
 }

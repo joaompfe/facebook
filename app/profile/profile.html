@@ -24,7 +24,7 @@
 		padding-bottom: 100px;
 	}
 	#headerImg {
-		background-image: url("exheader.jpg");
+		background-image: url("content/default_cover_photos/0.jpg");
 		height: 300px;
 		display: block;
 		background-position-x: center;
@@ -68,14 +68,14 @@
 	<div id="ProfileFeed" class="col-lg-10">
 		<div id="headerProfile">
 			<div id="headerImg">
-				<h1 id="ProfileName">{{profile.fullName}}</h1>
+				<h1 id="ProfileName">{{person.fullName}}</h1>
 			</div>
 			<div id="ProfileImg" >
 				<a href="" id="profilePicThumb" >
-					<img id="ProfileImgpng" ng-src="../upload/{{profilePic.filename}}" alt="" /> 
+					<img id="ProfileImgpng" ng-src="server/profile/getProfilePic.php?id={{person.id}}&gender={{person.gender}}&size='L'" alt="" /> 
 				</a> 
 			</div>
-			<span id="changeProfilePic" ng-if="checkUser()">
+			<span id="changeProfilePic" ng-if="isClientProfile">
 				
 				<button data-toggle="modal" data-target="#changeProfilePicModal">
 					<img id="changeProfilePicPng" src="../content/icons/photoIcon.png" alt="" />
@@ -84,36 +84,31 @@
 			
 		</div>
 
-		<div class="modal fade" id="changeProfilePicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-			  <div class="modal-content">
-				<div class="modal-header">
-				  <h5 class="modal-title" id="changeProfilePicTitle">Change Profile Picture</h5>
-				  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				  </button>
-				</div>
-				<div class="modal-body">
-					<div>
-						<input type="file" upload-photo="files" />
-					</div>
-					<button ng-click="changeProfilePhoto()" type="button" class="btn btn-primary">Load photo...</button>
-					<div>
-						
-					</div>
-				</div>
-				<div class="modal-footer">
-				  
-				  <button type="button" class="btn btn-primary">Save changes</button>
-				</div>
-			  </div>
-			</div>
-		  </div>
+    <div class="modal fade" id="changeProfilePicModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          
+          <div class="modal-header">
+            <h4 class="modal-title">Change Profile Picture</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <div class="modal-body">
+            <input type="file" upload-photo="files" />
+          </div>
+
+          <div class="modal-footer">
+            <button ng-click="changeProfilePhoto()" type="button" class="btn btn-dark" data-dismiss="modal">Save changes</button>
+          </div>
+    
+        </div>
+      </div>
+    </div>
 
 		<div class="col-lg-3 PersonalPresentation">
 			<ul>
-				<li id="BirthDate">Nascido em {{profile.birthday}}</li>
-				<li id="Gender">{{profile.gender}}</li>
+				<li id="BirthDate">Nascido em {{person.birthday}}</li>
+				<li id="Gender">{{person.gender}}</li>
 			</ul>
 		</div>
 

@@ -13,7 +13,7 @@ if (isset($_POST["content"]) && isset($_POST["postId"]) && isset($_SESSION["clie
     $authorId = $_SESSION["client"]["id"];
 }
 else {
-    $response["success"] = FALSE;
+    $response["success"] = false;
     echo json_encode($response);
     return;
 }

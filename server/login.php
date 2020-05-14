@@ -22,10 +22,10 @@ include './mysql/mysqlClose.php';
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $_SESSION["client"] = $row;
-    $response = array("loggedSucessfully"=>TRUE, "client"=>$row);
+    $response = array("loggedSucessfully"=>true, "client"=>$row);
     echo json_encode($response);
 }
 else {
-    $response = array("loggedSucessfully"=>FALSE);
+    $response = array("loggedSucessfully"=>false);
     echo json_encode($response);
 }

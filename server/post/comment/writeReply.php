@@ -14,7 +14,7 @@ if (isset($_POST["content"]) && isset($_POST["commentId"]) && isset($_SESSION["c
 }
 else {
     error_log("Missing POST data or no client sessioned");
-    $response["success"] = FALSE;
+    $response["success"] = false;
     echo json_encode($response);
     return;
 }

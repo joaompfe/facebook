@@ -12,7 +12,7 @@ if (isset($_POST["content"]) && isset($_SESSION["client"]["id"])) {
     $authorId = $_SESSION["client"]["id"];
 }
 else {
-    $response["success"] = FALSE;
+    $response["success"] = false;
     echo json_encode($response);
     return;
 }

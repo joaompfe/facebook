@@ -6,7 +6,7 @@ if (isset($_GET["postId"]) && isset($_SESSION["client"])) {
     $personId = $_SESSION["client"]["id"];
 }
 else {
-    $response["success"] = FALSE;
+    $response["success"] = false;
     echo json_encode($response);
     return;
 }
@@ -25,7 +25,7 @@ require_once 'utils/EasyQuery.php';
 use joaompfe\EasyQuery\EasyQuery;
 $likes = (new EasyQuery())->query($GLOBALS["connection"], $stmt);
 
-$response["sucess"] = TRUE;
+$response["sucess"] = true;
 $response["likes"] = $likes;
 $response["postId"] = $postId;  //???
 

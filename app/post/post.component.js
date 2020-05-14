@@ -26,6 +26,7 @@
         vm.appendLikes = appendLikes;
         vm.removeLike = removeLike;
         vm.$onInit = onInit;
+        vm.redirectToProfile = redirectToProfile;
         
         /**
          * Iterate through likes array and test if user client likes the post.
@@ -121,6 +122,10 @@
             if (index > -1) {
                 vm.post.likes.splice(index, 1);
             }
+        }
+
+        function redirectToProfile(id) {
+            post.redirectToProfile(id);
         }
     }
 

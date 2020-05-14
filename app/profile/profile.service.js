@@ -1,22 +1,21 @@
 "use strict";
 
-angular.module("fb.profile", []).factory("profile", [
-	"$http",
-	"$q",
-	"utils",
-	function ($http, $q, utils) {
+angular.module("fb.profile")
+    .factory("profile", ['server', function (server) {
 		var profile = {
-            getUserProfile: getUserProfile,
+            getPerson: getPerson,
 			changeProfilePhoto: changeProfilePhoto,
 			getProfilePic: getProfilePicture
 		};
 
-		return profile;
+        const baseUrl = 'server/profile/';
 
-		function getUserProfile(id) {
-			return utils.httpPromisse(
+        return profile;
+
+		function getPerson(id) {
+			return server.httpPromisse(
 				{
-					url: "server/profile/profile.php",
+					url: "server/person.php",
 					method: "GET",
 					params: {
 						id: id,
@@ -28,9 +27,9 @@ angular.module("fb.profile", []).factory("profile", [
 		}
 
 		function getProfilePicture(id) {
-			return utils.httpPromisse(
+			return server.httpPromisse(
 				{
-					url: "server/profile/getProfilePic.php",
+					url: baseUrl + "getProfilePic.php",
 					method: "GET",
 					params: {
 						id: id,
@@ -41,12 +40,12 @@ angular.module("fb.profile", []).factory("profile", [
 			);
 		}
 
-		function changeProfilePhoto(form_data) {
-			return utils.httpPromisse(
+		function changeProfilePhoto(formData) {
+			return server.httpPromisse(
 				{
-					url: "server/uploadImage.php",
+					url: baseUrl + "changeProfilePic.php",
 					method: "POST",
-					data: form_data,
+					data: formData,
 					transformRequest: angular.identity,
 					headers: {
 						"Content-Type": undefined,

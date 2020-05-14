@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('fb.post')
-    .factory('post', ['utils', function(utils) {
+    .factory('post', ['$location', 'server', function($location, server) {
         var post = {
             getComments: getComments,
             writeComment: writeComment,
             getLikes: getLikes,
             like: like,
-            dislike: dislike
+            dislike: dislike,
+            redirectToProfile: redirectToProfile
         };
 
         const baseUrl = 'server/post/';
@@ -15,7 +16,7 @@ angular.module('fb.post')
         return post;
         
         function getComments(postId, quantity, sinceCommentId) {
-            return utils.httpPromisse(
+            return server.httpPromisse(
                 {
                     url: baseUrl + 'readComments.php', 
                     method: 'GET',
@@ -31,7 +32,7 @@ angular.module('fb.post')
         }
 
         function writeComment(postId, content) {
-            return utils.httpPromisse(
+            return server.httpPromisse(
                 {
                     url: baseUrl + 'writeComment.php', 
                     method: 'POST',
@@ -46,7 +47,7 @@ angular.module('fb.post')
         }
 
         function getLikes(postId, quantity) {
-            return utils.httpPromisse(
+            return server.httpPromisse(
                 {
                     url: baseUrl + 'readLikes.php', 
                     method: 'GET',
@@ -61,7 +62,7 @@ angular.module('fb.post')
         }
 
         function like(postId) {
-            return utils.httpPromisse(
+            return server.httpPromisse(
                 {
                     url: baseUrl + 'like.php', 
                     method: 'GET',
@@ -75,7 +76,7 @@ angular.module('fb.post')
         }
 
         function dislike(postId) {
-            return utils.httpPromisse(
+            return server.httpPromisse(
                 {
                     url: baseUrl + 'dislike.php', 
                     method: 'GET',
@@ -86,5 +87,9 @@ angular.module('fb.post')
                 null,
                 "Dislike action failed in server"
             );
+        }
+
+        function redirectToProfile(id) {
+            $location.url("/profile/" + id);
         }
     }]);

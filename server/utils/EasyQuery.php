@@ -141,7 +141,7 @@ class EasyQuery {
         $result = $this->mysqli->query($stmt);
 
         if (!$result) {
-            error_log("Failed to connect to MySQL: (" . $stmt . ") " . $this->mysqli->error);
+            error_log("Query failed. Stmt: " . $stmt . ".Erro: " . $this->mysqli->error);
         }
 
         $fields = $result->fetch_fields();
@@ -167,7 +167,6 @@ class EasyQuery {
         $regex = ($isArray) ? "/^\\$i\[\]\.[a-zA-Z]+(?:\[\])?$/" : "/^\\$i\.[a-zA-Z]+(?:\[\])?$/";
         $nextStmts = [];
         foreach ($this->stmts as $ni=>$nextStmt) {
-            error_log("$regex");
             if (preg_match($regex, $ni)) {
                 $nextStmts[$ni] = $nextStmt;
             }

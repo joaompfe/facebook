@@ -1,51 +1,43 @@
 "use strict";
 
-angular.module("fb.profile").controller("ProfileCtrl", [
+angular.module("fb.profile", []).controller("ProfileCtrl", [
 	"$scope",
-	"$routeParams",
-	"$http",
+    "$routeParams",
+    "$location",
+    "$route",
 	"profile",
 	"client",
-	function ($scope, $routeParams, $http, profile, client) {
+	function ($scope, $routeParams, $location, $route, profile, client) {
 
-		$scope.checkUser = function () {
-			return $routeParams.id == client.id;
-		};
-
+		$scope.isClientProfile = ($routeParams.id == client.id);
 		$scope.changeProfilePhoto = changeProfilePhoto;
 
-		test();
+		init();
 
-		function test() {
-			profile.getUserProfile($routeParams.id).then(function (profile) {
-				$scope.profile = profile;
-			});
-			getProfilePic();
-			console.log($scope);
-		}
-
-		function getProfilePic() {
-			profile.getProfilePic($routeParams.id).then(function (profilePic) {
-				$scope.profilePic = profilePic;
-			});
-		}
-
-		function checkUser() {
-			return $routeParams.id == client.id;
-		}
-
+		function init() {
+            profile.getPerson($routeParams.id)
+            .then(function (person) {
+				$scope.person = person;
+			}, function(error) {
+                $location.url("/");
+            });
+        }
+        
 		function changeProfilePhoto() {
-			var form_data = new FormData();
+			var formData = new FormData();
 			angular.forEach($scope.files, function (file) {
-				form_data.append("file", file);
-			});
-			profile.changeProfilePhoto(form_data).then(function() {}, function(error) {console.log(error.reason)});
-			getProfilePic();
+				formData.append("file", file);
+            });
+            
+            profile.changeProfilePhoto(formData)
+            .then(function() {
+                document.getElementById('ProfileImgpng').src = 
+                "server/profile/getProfilePic.php?id=" + $scope.person.id + 
+                "&gender=" + $scope.person.gender + "&size=L#" + new Date().getTime();
+            }, function(error) { 
+                console.log(error.reason); 
+            });
 		}
 	
-
-		function select() {
-			$http.get("select.php");
-		}
 	},
 ]);

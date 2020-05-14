@@ -1,10 +1,10 @@
 <div class="comment">
-  <a href="#">
-    <img src="content/default_profile_photos/m_profile_photo_50.jpg" alt="">
+  <a class="clicable-img" href="/profile/{{vm.comment.author.id}}">
+    <img ng-src="server/profile/getProfilePic.php?id={{vm.comment.author.id}}&gender={{vm.comment.author.gender}}&size='S'" alt="">
   </a>
   <div>
     <div class="comment-text">
-      <a class="comment-author-name" href="#">{{vm.comment.author.fullName}}</a>
+      <a class="comment-author-name" href="/profile/{{vm.comment.author.id}}">{{vm.comment.author.fullName}}</a>
       {{vm.comment.text}}
     </div>
     <div class="comment-actions">
@@ -16,12 +16,12 @@
     <!-- Sub comments -->
     <div class="subcomments">
       <div ng-repeat="reply in vm.comment.replies" class="comment">
-        <a href="#">
-          <img src="content/default_profile_photos/m_profile_photo_50.jpg" alt="">
+        <a class="clicable-img" href="/profile/{{reply.author.id}}">
+          <img ng-src="server/profile/getProfilePic.php?id={{reply.author.id}}&gender={{reply.author.gender}}&size='XS'" alt="">
         </a>
         <div>
           <div class="comment-text">
-            <a class="comment-author-name" href="#">{{reply.author.fullName}}</a>
+            <a class="comment-author-name" href="/profile/{{reply.author.id}}">{{reply.author.fullName}}</a>
             {{reply.text}}
           </div>
           <div class="comment-actions">
@@ -37,8 +37,8 @@
         </div>
       </div>
       <form ng-show="vm.wasReplyClicked" ng-submit="vm.writeReply()" class="write-reply">
-        <a href="#">
-          <img src="content/default_profile_photos/m_profile_photo_50.jpg" alt="">
+        <a class="clicable-img" href="#">
+          <img ng-src="server/profile/getProfilePic.php?id={{$root.client.id}}&gender={{$root.client.gender}}&size='XS'" alt="">
         </a>
         <input ng-model="vm.replyContent" fb-element="vm.replyInput" type="text" placeholder="Write a reply...">
       </form>

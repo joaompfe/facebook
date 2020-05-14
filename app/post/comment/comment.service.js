@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('fb.post')
-    .factory('comment', ['utils', function(utils) {
+    .factory('comment', ['server', function(server) {
         var comment = {
             getReplies: getReplies,
             writeReply: writeReply
@@ -12,7 +12,7 @@ angular.module('fb.post')
         return comment;
         
         function getReplies(commentId, quantity, sinceReplyId) {
-            return utils.httpPromisse(
+            return server.httpPromisse(
                 {
                     url: baseUrl + 'readReplies.php', 
                     method: 'GET',
@@ -28,7 +28,7 @@ angular.module('fb.post')
         }
 
         function writeReply(commentId, content) {
-            return utils.httpPromisse(
+            return server.httpPromisse(
                 {
                     url: baseUrl + 'writeReply.php', 
                     method: 'POST',

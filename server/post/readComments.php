@@ -5,7 +5,7 @@ session_start();
 if (!isset($_SESSION["client"])) {
     //TODO
     //http_response_code(401); ?
-    $response["success"] = FALSE;
+    $response["success"] = false;
     echo json_encode($response);
     return;
 }
@@ -22,7 +22,7 @@ else {
 }
 
 
-$sql = "SELECT pc.*, p.fullName, (SELECT COUNT(*) FROM commentReplies WHERE comment = pc.id) 'amountOfReplies' 
+$sql = "SELECT pc.*, p.fullName, p.gender, (SELECT COUNT(*) FROM commentReplies WHERE comment = pc.id) 'amountOfReplies' 
         FROM postComments pc
         JOIN persons p ON p.id = pc.author
         $whereClause
@@ -35,10 +35,10 @@ include $_SERVER['DOCUMENT_ROOT'] . '/server/mysql/mysqlConnect.php';
 $result = $GLOBALS["db.connection"]->query($sql);
 if (!$result) {
     error_log($GLOBALS["db.connection"]->error);
-    $response["success"] = FALSE;
+    $response["success"] = false;
 }
 while ($r = $result->fetch_assoc()) {
-    $author = array("id"=>$r["author"], "fullName"=>$r["fullName"]);
+    $author = array("id"=>$r["author"], "fullName"=>$r["fullName"], "gender"=>$r["gender"]);
 
     $comment = array("id"=>$r["id"], "creationTime"=>$r["creationTime"], "text"=>$r["text"],
     "author"=>$author, "amountOfRepliesInDatabase"=>$r["amountOfReplies"], "replies"=>[]);
@@ -46,7 +46,7 @@ while ($r = $result->fetch_assoc()) {
     $comments[] = $comment;
 }
 
-$response["success"] = TRUE;
+$response["success"] = true;
 $response["comments"] = $comments;
 
 echo json_encode($response);
