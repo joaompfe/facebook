@@ -1,10 +1,6 @@
 <?php
-/**
- * This script returns a quantity os posts, where each post contains information
- * about its autor and information about its most liked comments. The most liked 
- * comment also contains an empty array of replies.
- */
-require_once 'utils/EasyQuery.php';
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/server/utils/EasyQuery.php';
 use joaompfe\EasyQuery\EasyQuery;
 
 session_start();
@@ -17,16 +13,45 @@ if (!isset($_SESSION["client"])) {
     return;
 }
 
-include 'mysql/mysqlConnect.php';
+include $_SERVER['DOCUMENT_ROOT'] .  '/server/mysql/mysqlConnect.php';
 $conn = $GLOBALS["db.connection"];
 
+$personId = mysqli_real_escape_string($conn, $_GET["id"]);
 // How much posts, at maximum, to return
 $quantity = mysqli_real_escape_string($conn, $_GET["quantity"]);
 // Type can be "new" or "old". "new" is for postsId's > "newerSentPostId". "old" is for postsIds < "olderSentPostId"
 $type = $_GET["type"];
-$id = $_SESSION["client"]["id"];
+$sessionId = $_SESSION["client"]["id"];
 
-$whereClause = "requestor = $id OR acceptor = $id OR author = $id OR public = 1 ";
+// Test if they are friends or is public profile
+if ($personId !== $sessionId) {
+    $sql = "SELECT * FROM friendships f
+    RIGHT JOIN persons ON f.requestor = persons.id OR f.acceptor = persons.id
+    WHERE 
+    ((requestor = $personId AND acceptor = $sessionId) OR 
+    (requestor = $sessionId AND acceptor = $personId)) OR
+    (id = $personId AND public = '1')";
+
+    $result = $GLOBALS["db.connection"]->query($sql);
+    if (!$result) {
+        error_log($GLOBALS["db.connection"]->error);
+        http_response_code(400);
+        include $_SERVER['DOCUMENT_ROOT'] . '/server/mysql/mysqlClose.php';
+        exit();
+    }
+
+    $areFriends = $result->num_rows > 0;
+    if (!$areFriends) {
+        $response["success"] = true;
+        $response["areFriends"] = false;
+        $response["posts"] = null;
+        echo json_encode($response);
+        include $_SERVER['DOCUMENT_ROOT'] . '/server/mysql/mysqlClose.php';
+        exit();
+    }
+}
+
+$whereClause = " author = $personId ";
 
 if (isset($_GET["postId"]) && is_int($_GET["postId"])) {
     $comparisonPostId = $_GET["postId"];
@@ -58,8 +83,9 @@ $easyQuery = new EasyQuery();
 
 $posts = $easyQuery->query($conn, $stmt);
 
-$response["success"] = TRUE;
+$response["success"] = true;
+$response["areFriends"] = true;
 $response["posts"] = $posts;
 echo json_encode($response);
 
-include './mysql/mysqlClose.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/server/mysql/mysqlClose.php';

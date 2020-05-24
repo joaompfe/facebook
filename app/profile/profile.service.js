@@ -5,7 +5,8 @@ angular.module("fb.profile")
 		var profile = {
             getPerson: getPerson,
 			changeProfilePhoto: changeProfilePhoto,
-			getProfilePic: getProfilePicture
+            getProfilePic: getProfilePicture,
+            getNewPosts: getNewPosts
 		};
 
         const baseUrl = 'server/profile/';
@@ -54,8 +55,24 @@ angular.module("fb.profile")
 				},
 				null,
 				"Profile photo change failed in server"
+            ); 
+        }
+        
+        function getNewPosts(quantity, sincePostId, personId) {
+            return server.httpPromisse(
+                {
+                    url: baseUrl + 'posts.php', 
+                    method: 'GET',
+                    params: {
+                        quantity: quantity,
+                        type: 'new',
+                        postId: sincePostId,
+                        id: personId
+                    }
+                },
+                "posts",
+                "Server returned no post"
             );
-          
-		}
+        }
 	},
 ]);

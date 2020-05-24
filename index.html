@@ -1,45 +1,45 @@
 <!DOCTYPE html>
 <html ng-app="fb">
-    <head>
-        <meta charset="UTF-8">
-        <title>Facebook</title>
-        <link rel="shortcut icon" type="image/x-icon" href="content/icons/icon.ico"/>
-        <base href="/">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-route.js"></script>
-    </head>
-    <body>
-        
-        <div ng-if="client.isLogged" ng-include="'app/navbar.html'"></div>
-        
-        <div ng-view></div>
-        
-        
-        <script src="app/app.module.js"></script>
-        <script src="app/app.service.js"></script>
-        <script src="app/app.service.js"></script>
+  <head>
+      <meta charset="UTF-8">
+      <title>Facebook</title>
+      <link rel="shortcut icon" type="image/x-icon" href="content/icons/icon.ico"/>
+      <base href="/">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-route.js"></script>
+  </head>
+  <body>
+      
+      <div ng-if="client.isLogged" ng-include="'app/navbar.html'"></div>
+      
+      <div ng-view></div>
+      
+      
+      <script src="app/app.module.js"></script>
+      <script src="app/app.service.js"></script>
+      <script src="app/app.service.js"></script>
 
-        <script src="app/utils/utils.module.js"></script>
-        <script src="app/utils/utils.directive.js"></script>
+      <script src="app/utils/utils.module.js"></script>
+      <script src="app/utils/utils.directive.js"></script>
 
-        <script src="app/home/home.module.js"></script>
-        <script src="app/home/home.service.js"></script>
+      <script src="app/home/home.module.js"></script>
+      <script src="app/home/home.service.js"></script>
 
-        <script src="app/login/login.module.js"></script>        
-        <script src="app/login/signup/signup.module.js"></script>
+      <script src="app/login/login.module.js"></script>        
+      <script src="app/login/signup/signup.module.js"></script>
 
-        <script src="app/profile/profile.module.js"></script>
-        <script src="app/profile/profile.service.js"></script>
+      <script src="app/profile/profile.module.js"></script>
+      <script src="app/profile/profile.service.js"></script>
 
-        <script src="app/post/post.module.js"></script>
-        <script src="app/post/post.service.js"></script>
-        <script src="app/post/post.component.js"></script>
-        <script src="app/post/comment/comment.service.js"></script>
-        <script src="app/post/comment/comment.component.js"></script>
-    </body>
+      <script src="app/post/post.module.js"></script>
+      <script src="app/post/post.service.js"></script>
+      <script src="app/post/post.component.js"></script>
+      <script src="app/post/comment/comment.service.js"></script>
+      <script src="app/post/comment/comment.component.js"></script>
+  </body>
 </html>
