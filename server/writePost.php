@@ -1,5 +1,8 @@
 <?php
 // This script writes a post in the database
+error_log("AA");
+include 'mysql/mysqlConnect.php';
+$conn = $GLOBALS["db.connection"];
 
 session_start();
 
@@ -8,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST)) {
 }
 
 if (isset($_POST["content"]) && isset($_SESSION["client"]["id"])) {
-    $content = $_POST["content"];
+    $content = mysqli_real_escape_string($conn, $_POST["content"]);
     $authorId = $_SESSION["client"]["id"];
 }
 else {
@@ -19,10 +22,8 @@ else {
 
 $sql = "INSERT INTO posts (author, text) VALUES ($authorId, '$content');";
 
-include 'mysql/mysqlConnect.php';
-
 // query returns TRUE if executes sucessfully, ie, if sign up occour successfully
-$response["success"] = $GLOBALS["db.connection"]->query($sql);
+$response["success"] = $conn->query($sql);
 
 include './mysql/mysqlClose.php';
 

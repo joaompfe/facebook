@@ -8,10 +8,10 @@
                 post: '<'
             },
             controllerAs: 'vm',
-            controller: ['post', 'client', postController]
+            controller: ['post', 'client', '$sce', postController]
         });
 
-    function postController(post, client) {
+    function postController(post, client, $sce) {
         var vm = this;
 
         vm.wereCommentsRequested = false;   // Set to true when viewMoreComments() is called the first time
@@ -39,6 +39,8 @@
                     break;
                 }
             }
+            // To properly show \n
+            vm.post.formattedText = $sce.trustAsHtml(vm.post.text.replace(/\n/g, '<br/>'));
         }
 
         function getMoreComments() {

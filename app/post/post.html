@@ -45,7 +45,7 @@
     margin-top: 0.5rem;
     padding-bottom: 0.5rem;
     padding-left: 0.7rem;
-    padding-right: 0.7rem;
+    word-break: break-word;
   }
   #likes
   {
@@ -177,7 +177,7 @@
     </div>
   </div>
   <div id="content">
-    <p>{{vm.post.text}}</p>
+    <p ng-bind-html="vm.post.formattedText"></p>
   </div>
   <div id="likes" ng-if="vm.post.likes.length > 0">
     <a href="#" role="button">

@@ -14,6 +14,9 @@
     margin-top: 14px;
   }
 </style>
+<script>
+  window.onbeforeunload = function(){ window.scrollTo(0,0); }
+</script>
 <div id="facebook">
   <h1>Main Page of {{client.fullName}}</h1>
   <a href="/profile">Go to profile</a>
@@ -24,6 +27,7 @@
         <p>{{client.fullName}}</p>
       </div>
       <div class="col-7">
+        <post-input-box></post-input-box>
         <div ng-if="postsLoaded">
           <div class="post" ng-repeat="post in posts">
             <post-comp post="post"></post-comp>

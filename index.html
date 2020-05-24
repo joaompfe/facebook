@@ -14,7 +14,6 @@
       <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-route.js"></script>
   </head>
   <body>
-      
       <div ng-if="client.isLogged" ng-include="'app/navbar.html'"></div>
       
       <div ng-view></div>
@@ -41,5 +40,8 @@
       <script src="app/post/post.component.js"></script>
       <script src="app/post/comment/comment.service.js"></script>
       <script src="app/post/comment/comment.component.js"></script>
+
+      <script src="app/postInputBox/postInputBox.component.js"></script>
+      <script src="app/postInputBox/postInputBox.service.js"></script>
   </body>
 </html>

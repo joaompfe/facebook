@@ -1,0 +1,50 @@
+<style>
+  textarea:focus, button:focus
+  {
+    outline: none;  
+  }
+  .post-input-box
+  {
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #dadde1;
+    margin-top: 20px;
+    overflow: hidden;
+  }
+  .header
+  {
+    font-weight: 600;
+    background-color: #f5f6f7;
+    padding: 7px;
+    font-size: 13px;
+  }
+  .post-input-box form
+  {
+    display: grid;
+  }
+  .post-input-box textarea
+  {
+    border: none;
+    margin: 1rem;
+  }
+  .post-input-box button
+  {
+    width: 100% !important;
+    background-color: #4267b2;
+    color: white;
+    border: none;
+    height: 2rem;
+    font-size: 14px;
+    font-weight: 600;
+  }
+</style>
+<div class="post-input-box">
+  <div class="header">
+    Create Post
+  </div>
+  <form id="form" ng-submit="vm.writePost()">
+    <!-- <input ng-model="vm.content" type="text" placeholder="What's in your mind?"> -->
+    <textarea ng-model="vm.content"></textarea>
+    <button>Post</button>
+  </form>
+</div>
