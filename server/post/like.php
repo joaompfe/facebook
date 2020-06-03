@@ -11,12 +11,13 @@ else {
     return;
 }
 
-$sql = "INSERT INTO postLikes VALUES ($postId, $personId);";
+$sql = "INSERT INTO postLikes (post, person) VALUES ($postId, $personId);";
 
 include $_SERVER['DOCUMENT_ROOT'] . '/server/mysql/mysqlConnect.php';
 
 $response["success"] = $GLOBALS["db.connection"]->query($sql);
-$response["like"] = ["author"=>["id"=>$personId, "fullName"=>$_SESSION["client"]["fullName"]]];
+$response["like"] = ["author"=>["id"=>$personId, "fullName"=>$_SESSION["client"]["fullName"]],
+                    "id"=>mysqli_insert_id($GLOBALS["db.connection"])];
 
 include $_SERVER['DOCUMENT_ROOT'] . '/server/mysql/mysqlClose.php';
 

@@ -27,10 +27,16 @@ $type = $_GET["type"];
 $id = $_SESSION["client"]["id"];
 
 $whereClause = "requestor = $id OR acceptor = $id OR author = $id OR public = 1 ";
+$havingClause = "";
 
-if (isset($_GET["postId"]) && is_int($_GET["postId"])) {
+if (isset($_GET["postId"])) {
     $comparisonPostId = $_GET["postId"];
-    $whereClause .= $type == "new" ? " pos.id > $comparisonPostId " : " pos.id < $comparisonPostId ";
+    $havingClause = $type == "new" ? " pos.id > $comparisonPostId " : " pos.id < $comparisonPostId ";
+
+    error_log($whereClause . "\n" . $whereClause . "\n" . $whereClause . "\n" . $whereClause . "\n");
+}
+else {
+    error_log("A\nA\nA\nA\nA\nA\n");
 }
 
 $stmt = array(
@@ -41,8 +47,9 @@ $stmt = array(
         JOIN persons author ON author.id = pos.author
         LEFT JOIN friendships f ON f.requestor = pos.author OR f.acceptor = pos.author
         WHERE $whereClause
+        HAVING $havingClause
         ORDER BY creationTime DESC LIMIT $quantity;",
-    "?.likes[]"=>"SELECT person 'author.id', fullName 'author.fullName' FROM postLikes pl
+    "?.likes[]"=>"SELECT person'author.id', pl.id 'id', fullName 'author.fullName' FROM postLikes pl
         JOIN persons p ON p.id = pl.person WHERE post = ?.id;",
     "?.comments[]"=>"SELECT postComments.id, author 'author.id', creationTime, text, 
         fullName 'author.fullName', gender 'author.gender',
@@ -57,6 +64,7 @@ $stmt = array(
 $easyQuery = new EasyQuery();
 
 $posts = $easyQuery->query($conn, $stmt);
+if ($posts == null) { $posts = []; };
 
 $response["success"] = TRUE;
 $response["posts"] = $posts;

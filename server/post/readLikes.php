@@ -11,23 +11,22 @@ else {
     return;
 }
 
-if (isset($_GET["quantity"])) {
-    error_log("quantity value: {$_GET["quantity"]}");
-}
+// TODO proteger contra sql injection
+$sinceIdClause = isset($_GET["sinceId"]) ? " id > {$_GET["sinceId"]} " : "";
+$limitClause = isset($_GET["quantity"]) ? " LIMIT {$_GET["quantity"]} " : "";
 
-$limitClause = (isset($_GET["quantity"])) ? " LIMIT {$_GET["quantity"]} " : "";
-
-$stmt = ["SELECT person FROM postLikes WHERE post = $postId" . $limitClause . ";"];
+$sql = "SELECT id, person FROM postLikes WHERE post = $postId" . " AND " . $sinceIdClause . $limitClause . ";";
 
 include $_SERVER['DOCUMENT_ROOT'] . '/server/mysql/mysqlConnect.php';
 
-require_once 'utils/EasyQuery.php';
-use joaompfe\EasyQuery\EasyQuery;
-$likes = (new EasyQuery())->query($GLOBALS["connection"], $stmt);
+$result = $GLOBALS["db.connection"]->query($sql);
 
-$response["sucess"] = true;
-$response["likes"] = $likes;
-$response["postId"] = $postId;  //???
+if ($result !== false) {
+    $response["success"] = true;
+    $response["likes"] = $result->fetch_all(MYSQLI_ASSOC);
+} else {
+    $response["success"] = false;
+}
 
 echo json_encode($response);
 

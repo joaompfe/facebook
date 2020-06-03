@@ -8,10 +8,10 @@
                 post: '<'
             },
             controllerAs: 'vm',
-            controller: ['post', 'client', '$sce', postController]
+            controller: ['post', 'client', '$sce', '$interval', postController]
         });
 
-    function postController(post, client, $sce) {
+    function postController(post, client, $sce, $interval) {
         var vm = this;
 
         vm.wereCommentsRequested = false;   // Set to true when viewMoreComments() is called the first time
@@ -27,6 +27,7 @@
         vm.removeLike = removeLike;
         vm.$onInit = onInit;
         vm.redirectToProfile = redirectToProfile;
+        vm.lastLikeId = 0;
         
         /**
          * Iterate through likes array and test if user client likes the post.
@@ -34,6 +35,9 @@
          */
         function onInit() {
             for (var like of vm.post.likes) {
+                if (like.id > vm.lastLikeId) {
+                    vm.lastLikeId = like.id;
+                }
                 if (like.author.id == client.id) {
                     vm.clientLike = like;
                     break;
@@ -41,6 +45,8 @@
             }
             // To properly show \n
             vm.post.formattedText = $sce.trustAsHtml(vm.post.text.replace(/\n/g, '<br/>'));
+
+            $interval(getNewLikes, 10000);
         }
 
         function getMoreComments() {
@@ -116,6 +122,14 @@
         }
 
         function appendLikes() {
+            // Update vm.lastLikeId
+            for (let like of arguments) {
+                like.id = like.id * 1.0;
+                if (like.id > vm.lastLikeId) {
+                    vm.lastLikeId = like.id;
+                }
+            }
+            // append
             vm.post.likes.push(...arguments);
         }
 
@@ -128,6 +142,17 @@
 
         function redirectToProfile(id) {
             post.redirectToProfile(id);
+        }
+
+        function getNewLikes() {
+            post.getLikes(vm.post.id, 10, vm.lastLikeId)
+            .then(function(newLikes) {
+                if (newLikes.length > 0) {
+                    vm.appendLikes(... newLikes);
+                }
+            }, function(error) {
+                console.log("error: ", error.reason);
+            });
         }
     }
 

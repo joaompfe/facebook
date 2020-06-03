@@ -46,14 +46,15 @@ angular.module('fb.post')
             );
         }
 
-        function getLikes(postId, quantity) {
+        function getLikes(postId, quantity, sinceId) {
             return server.httpPromisse(
                 {
                     url: baseUrl + 'readLikes.php', 
                     method: 'GET',
                     params: {
                         postId: postId,
-                        quantity: quantity
+                        quantity: quantity,
+                        sinceId: sinceId
                     }
                 },
                 "likes",

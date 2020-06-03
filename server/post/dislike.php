@@ -16,7 +16,6 @@ $sql = "DELETE FROM postLikes WHERE post = $postId AND person = $personId;";
 include $_SERVER['DOCUMENT_ROOT'] .  '/server/mysql/mysqlConnect.php';
 
 $response["success"] = $GLOBALS["db.connection"]->query($sql);
-$response["like"] = ["author"=>["id"=>$personId, "fullName"=>$_SESSION["client"]["fullName"]]];
 
 include $_SERVER['DOCUMENT_ROOT'] . '/server/mysql/mysqlClose.php';
 
