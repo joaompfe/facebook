@@ -1,5 +1,6 @@
 <?php
-
+// TODO criar pasta de person se ainda não existir.
+// O ideal é criar a pasta logo quando é feito o sign up
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST)) {

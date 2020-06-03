@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('fb.home', ['fb.post'])
-    .controller('HomeCtrl', ['$scope', 'posts', function($scope, posts) {
+    .controller('HomeCtrl', ['$scope', '$anchorScroll', '$timeout', '$location', 'posts', 
+    function($scope, $anchorScroll, $timeout, $location, posts) {
         $scope.posts = [];          // Defined in init()   
         $scope.postsLoaded = false;
         $scope.newestPost;          // Defined in init()
@@ -22,5 +23,12 @@ angular.module('fb.home', ['fb.post'])
             }, function(error) {
                 console.log(error.reason);
             });
+
+            $timeout(function() {
+                //$location.hash('top');
+                //$anchorScroll();
+                window.scrollTo(0, 0); // Scroll top
+            }, 2000);
         };
+
     }]);
