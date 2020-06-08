@@ -1,0 +1,35 @@
+<style>
+	#find-persons-page {
+		padding-left: 30rem;
+		padding-right: 30rem;
+		background-color: #e9ebee;
+	}
+</style>
+<div id="find-persons-page">
+	<div >
+		<h1>Find Friends</h1>
+		<div
+			class="personSuggestion"
+			ng-repeat="personSuggestion in personSuggestions"
+		>
+			<person-suggestion-comp
+				friend-suggestion="personSuggestion"
+			></person-suggestion-comp>
+		</div>
+		<div ng-if="personSuggestions.length == 0">
+			<h5>Friends suggestions not found</h5>
+		</div>
+	</div>
+	<div>
+		<h1>Friend Requests</h1>
+		<div class="personRequest" ng-repeat="personRequest in personRequests">
+			<person-req-comp
+				person-request="personRequest" 
+			></person-req-comp>
+		</div>
+		<div ng-if="personRequests.length == 0">
+			<h5>Friends suggestions not found</h5>
+		</div>
+	</div>
+	
+</div>

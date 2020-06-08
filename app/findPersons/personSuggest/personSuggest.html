@@ -1,0 +1,68 @@
+<style>
+	#friendSuggestion {
+		background-color: white;
+		border-radius: 2px;
+		border: 1px solid #dadde1;
+		padding: 20px;
+		margin-bottom: 10px;
+	}
+	.clicable-img {
+		text-decoration: none !important;
+		border: 0px !important;
+		outline: none;
+		border-width: 0px;
+		outline-width: 0px;
+		border-bottom: none;
+	}
+	.clicable-img > img {
+		border-radius: 50%;
+		height: 50px;
+		width: 50px;
+	}
+	#friendSuggestion > div > div > div {
+		display: inline-block;
+		vertical-align: bottom;
+	}
+	
+	#buttonadd {
+		background-color: #4267b2;
+		color: white;
+		border: none;
+		height: 2rem;
+		width: 4rem;
+		font-size: 14px;
+		font-weight: 600;
+		vertical-align: sub;
+		float: right;
+		margin: 1rem;
+	}
+	#center {
+		float: right;
+	}
+	
+	
+</style>
+
+<div id="friendSuggestion">
+	<div class="row">
+		<div class="col-6">
+			<a class="clicable-img" href="/profile/{{vm.friendSuggestion.id}}">
+				<img
+					ng-src="server/profile/getProfilePic.php?id={{vm.friendSuggestion.id}}&gender={{vm.friendSuggestion.gender}}&size='S'"
+					alt=""
+				/>
+			</a>
+			<div>
+				<a href="/profile/{{vm.friendSuggestion.id}}">
+					<h5>{{vm.friendSuggestion.name}}</h5>
+				</a>
+			</div>
+		</div>
+		<div class="col-6" style="align-self: center;">
+			<button ng-click="vm.addPerson()" id="buttonadd" ng-if="!vm.requestSent">Add</button>
+			<h6 ng-if="vm.requestSent" id="requestSent">Friend request has been sent</h6>
+		</div>
+	</div>
+
+	
+</div>
