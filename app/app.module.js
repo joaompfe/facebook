@@ -1,21 +1,25 @@
 (function(angular) {
   'use strict';
-angular.module('fb', ['fb.home', 'fb.login', 'fb.profile', 'ngRoute'])
+angular.module('fb', ['fb.home', 'fb.login', 'fb.profile', 'fb.findPersons' , 'ngRoute'])
     .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider
-            .when('/', {
-                templateUrl: 'app/home/homepage.html',
-                controller: 'HomeCtrl'
+            .when("/", {
+                templateUrl: "app/home/homepage.html",
+                controller: "HomeCtrl",
             })
-            .when('/profile/:id',{
-               templateUrl: 'app/profile/profile.html',
-               controller: 'ProfileCtrl'
+            .when("/profile/:id", {
+                templateUrl: "app/profile/profile.html",
+                controller: "ProfileCtrl",
             })
-            .when('/login', {
-                templateUrl: 'app/login/login.html',
-                controller: 'LoginCtrl'
+            .when("/login", {
+                templateUrl: "app/login/login.html",
+                controller: "LoginCtrl",
             })
-            .otherwise('/');
+            .when("/findPersons", {
+                templateUrl: "app/findPersons/findPersons.html",
+                controller: "AddPersonsCtrl",
+            })
+            .otherwise("/");
 
         $locationProvider.html5Mode(true);
     }])

@@ -1,0 +1,68 @@
+<style>
+	#personRequest {
+		background-color: white;
+		border-radius: 2px;
+		border: 1px solid #dadde1;
+		padding: 20px;
+		margin-bottom: 10px;
+	}
+	.clicable-img {
+		text-decoration: none !important;
+		border: 0px !important;
+		outline: none;
+		border-width: 0px;
+		outline-width: 0px;
+		border-bottom: none;
+	}
+	.clicable-img > img {
+		border-radius: 50%;
+		height: 50px;
+		width: 50px;
+	}
+	#buttondeny {
+		background-color: #ff0000;
+		color: white;
+		border: none;
+		height: 2rem;
+		width: 4rem;
+		font-size: 14px;
+		font-weight: 600;
+		vertical-align: sub;
+		float: right;
+		margin: 1rem;
+	}
+	#personRequest > div > div > div {
+		display: inline-block;
+		vertical-align: bottom;
+	}
+	#right {
+		float: right;
+	}
+</style>
+<div id="personRequest">
+	<div class="row">
+		<div class="col-6">
+			<a class="clicable-img" href="/profile/{{vm.personRequest.id}}">
+				<img
+					ng-src="server/profile/getProfilePic.php?id={{vm.personRequest.id}}&gender={{vm.personRequest.gender}}&size='S'"
+					alt=""
+				/>
+				<div>
+					<a href="/profile/{{vm.personRequest.id}}">
+						<h5>{{vm.personRequest.fullName}}</h5>
+					</a>
+				</div>
+			</a>
+		</div>
+		<div class="col-6" style="align-self: center;">
+			<div ng-if="!vm.accepted && !vm.denied" id="right">
+				<button ng-click="vm.deny()" id="buttondeny" >Deny</button>
+				<button ng-click="vm.accept()" id="buttonadd" >Accept</button>
+			</div>
+			<h6 ng-if="vm.accepted" id="right">Friend request accepted</h6>
+			<h6 ng-if="vm.denied" id="right">Friend request denied</h6>
+		</div>
+	</div>
+
+	
+</div>
